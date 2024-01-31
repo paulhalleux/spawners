@@ -1,0 +1,9 @@
+name: 'Spawners'
+version: '${project.version}'
+main: me.kauzas.spawners.plugin.Main
+author: Kauzas
+description: 'A plugin that allows you to manage spawners.'
+api-version: 1.16
+commands:
+  spawners:
+    description: 'Main command of the plugin.'
