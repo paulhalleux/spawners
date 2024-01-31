@@ -50,6 +50,7 @@ public abstract class ReflectionRegisterer<T> implements RegistererInterface<T> 
                     .getGenericSuperclass()).getActualTypeArguments()[0]);
 
             for (Class<? extends T> t : items.stream().filter(o -> !o.isAnnotationPresent(SkipRegistration.class)).toList()) {
+                if (skip(t)) continue;
                 T item = createInstance(t);
                 if (item == null) {
                     onRegister(t, RegisterResult.FAILED);
@@ -69,6 +70,12 @@ public abstract class ReflectionRegisterer<T> implements RegistererInterface<T> 
         }
     }
 
+    /**
+     * Create an instance of the given class.
+     *
+     * @param t Class to create an instance of.
+     * @return Created instance.
+     */
     private T createInstance(Class<? extends T> t) {
         try {
             return t.getDeclaredConstructor().newInstance();

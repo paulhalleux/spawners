@@ -1,6 +1,7 @@
 package me.kauzas.spawners.plugin;
 
 import me.kauzas.spawners.sdk.commands.CommandRegisterer;
+import me.kauzas.spawners.sdk.events.DomainEventRegisterer;
 import me.kauzas.spawners.sdk.plugin.PluginBase;
 
 /**
@@ -13,6 +14,7 @@ public class Main extends PluginBase {
 
         // Add registerers
         addRegisterer(new CommandRegisterer("me.kauzas.spawners.plugin.commands", this));
+        addRegisterer(new DomainEventRegisterer("me.kauzas.spawners.plugin.handlers", this));
     }
 
     @Override
