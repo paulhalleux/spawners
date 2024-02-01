@@ -1,0 +1,8 @@
+{
+  "prefix": "&7[&eSpawners&7]&r ",
+  "error": {
+    "invalid-block": "&cYou must be looking at a spawner to use this command",
+    "no-target-block": "&cNo target block found",
+    "invalid-entity": "&cInvalid entity type: &7{{entity}}"
+  }
+}

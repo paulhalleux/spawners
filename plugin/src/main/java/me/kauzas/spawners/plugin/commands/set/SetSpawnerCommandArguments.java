@@ -26,7 +26,7 @@ public class SetSpawnerCommandArguments extends CommandArguments {
     /**
      * Get the type of the entity to spawn.
      *
-     * @return Type of the entity to spawn.
+     * @return Type of the entity to spawn or null if not known or not specified.
      */
     @Nullable
     public EntityType getEntityType() {

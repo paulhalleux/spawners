@@ -1,7 +1,7 @@
 package me.kauzas.spawners.plugin.events;
 
 import me.kauzas.spawners.sdk.events.DomainEvent;
-import org.bukkit.block.Block;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -23,18 +23,18 @@ public class SpawnerTypeChangeEvent extends DomainEvent {
     private final Player player;
 
     /**
-     * Block of the spawner.
+     * Spawner state.
      */
-    private Block block;
+    private final CreatureSpawner spawnerState;
 
     /**
      * Type of the entity to spawn.
      */
     private EntityType entityType;
 
-    public SpawnerTypeChangeEvent(Player player, Block block, EntityType entityType) {
+    public SpawnerTypeChangeEvent(Player player, CreatureSpawner spawnerState, EntityType entityType) {
         this.player = player;
-        this.block = block;
+        this.spawnerState = spawnerState;
         this.entityType = entityType;
     }
 
@@ -64,17 +64,8 @@ public class SpawnerTypeChangeEvent extends DomainEvent {
      * @return Block of the spawner.
      */
     @Nonnull
-    public Block getBlock() {
-        return block;
-    }
-
-    /**
-     * Set the block of the spawner.
-     *
-     * @param block Block of the spawner.
-     */
-    public void setBlock(Block block) {
-        this.block = block;
+    public CreatureSpawner getSpawnerState() {
+        return spawnerState;
     }
 
     /**

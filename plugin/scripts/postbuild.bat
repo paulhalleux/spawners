@@ -1,0 +1,22 @@
+@ECHO OFF
+
+IF "%1"=="" GOTO :USAGE
+IF "%2"=="" GOTO :USAGE
+
+IF NOT EXIST "%1" GOTO :USAGE
+IF NOT EXIST "%2" GOTO :CREATE_DIR
+
+GOTO :COPY_FILE
+
+:USAGE
+ECHO Usage: %0 ^<file^> ^<directory^>
+GOTO :EOF
+
+:CREATE_DIR
+IF NOT EXIST "%2" MKDIR "%2"
+GOTO :COPY_FILE
+
+:COPY_FILE
+ECHO Copying %1 to %2
+XCOPY /Y /Q /I "%1" "%2"
+GOTO :EOF

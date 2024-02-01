@@ -10,13 +10,8 @@ import org.bukkit.block.CreatureSpawner;
 public class SpawnerTypeChangeHandler extends DomainEventHandler<SpawnerTypeChangeEvent> {
     @Override
     public void handle(SpawnerTypeChangeEvent event) {
-        CreatureSpawner spawner = (CreatureSpawner) event.getBlock().getState();
+        CreatureSpawner spawner = event.getSpawnerState();
         spawner.setSpawnedType(event.getEntityType());
-        spawner.setMinSpawnDelay(0);
-        spawner.setDelay(10);
-        spawner.setSpawnCount(15);
-        spawner.update();
-
         event.getPlayer().sendMessage("Spawner type changed to " + event.getEntityType().name());
     }
 }

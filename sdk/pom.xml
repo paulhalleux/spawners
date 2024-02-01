@@ -34,6 +34,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>nl.big-o</groupId>
+            <artifactId>liqp</artifactId>
+            <version>0.8.5.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.10.2</version>

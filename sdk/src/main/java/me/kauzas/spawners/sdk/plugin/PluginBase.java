@@ -1,11 +1,14 @@
 package me.kauzas.spawners.sdk.plugin;
 
+import me.kauzas.spawners.sdk.configuration.PluginFile;
 import me.kauzas.spawners.sdk.registerer.ReflectionRegisterer;
 import me.kauzas.spawners.sdk.registerer.RegistererInterface;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -13,12 +16,14 @@ import java.util.function.Consumer;
  */
 public abstract class PluginBase extends JavaPlugin {
     private final List<RegistererInterface<?>> registerers;
+    private final Map<String, PluginFile> files;
 
     /**
      * Constructor of {@link PluginBase}.
      */
     protected PluginBase() {
         this.registerers = new ArrayList<>();
+        this.files = new HashMap<>();
     }
 
     /**
@@ -63,5 +68,33 @@ public abstract class PluginBase extends JavaPlugin {
      */
     public List<RegistererInterface<?>> getRegisterers() {
         return registerers;
+    }
+
+    /**
+     * Gets a file by its name.
+     *
+     * @param name Name of the file.
+     * @return File instance.
+     */
+    public PluginFile getFile(String name) {
+        return files.get(name);
+    }
+
+    /**
+     * Adds a file to the plugin.
+     *
+     * @param file File to add.
+     */
+    public void addFile(String name, PluginFile file) {
+        files.put(name, file);
+    }
+
+    /**
+     * Gets all files.
+     *
+     * @return List of files.
+     */
+    public List<PluginFile> getFiles() {
+        return new ArrayList<>(files.values());
     }
 }

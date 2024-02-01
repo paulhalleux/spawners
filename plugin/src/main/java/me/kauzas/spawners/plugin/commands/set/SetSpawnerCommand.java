@@ -1,18 +1,20 @@
 package me.kauzas.spawners.plugin.commands.set;
 
+import me.kauzas.spawners.plugin.Main;
 import me.kauzas.spawners.plugin.events.SpawnerTypeChangeEvent;
 import me.kauzas.spawners.sdk.commands.AbstractCommand;
 import me.kauzas.spawners.sdk.commands.CommandContext;
 import me.kauzas.spawners.sdk.commands.CommandMeta;
 import me.kauzas.spawners.sdk.commands.CompletableCommand;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @CommandMeta(name = "set", description = "Set a spawner type.", subCommand = true, playerOnly = true)
 public class SetSpawnerCommand extends AbstractCommand<SetSpawnerCommandArguments> implements CompletableCommand {
@@ -20,23 +22,23 @@ public class SetSpawnerCommand extends AbstractCommand<SetSpawnerCommandArgument
     public void execute(CommandContext context, SetSpawnerCommandArguments args) {
         Player player = (Player) context.sender();
         if (args.getEntityType() == null || !args.getEntityType().isSpawnable()) {
-            player.sendMessage("Invalid entity type.");
+            String entity = args.getEntityType() == null ? args.getRawArg(0) : args.getEntityType().name();
+            player.sendMessage(Main.getLocaleFile().prefixed("error.invalid-entity", Map.of("entity", entity)));
             return;
         }
 
         Block targetBlock = player.getTargetBlockExact(5);
         if (targetBlock == null) {
-            player.sendMessage("You must look at a block.");
+            player.sendMessage(Main.getLocaleFile().prefixed("error.no-target-block"));
             return;
         }
 
-        if (targetBlock.getType() != Material.SPAWNER) {
-            player.sendMessage("You must look at a spawner.");
-            return;
+        if (targetBlock.getState() instanceof CreatureSpawner spawner) {
+            SpawnerTypeChangeEvent event = new SpawnerTypeChangeEvent(player, spawner, args.getEntityType());
+            event.call();
         }
 
-        SpawnerTypeChangeEvent event = new SpawnerTypeChangeEvent(player, targetBlock, args.getEntityType());
-        event.call();
+        player.sendMessage(Main.getLocaleFile().prefixed("error.invalid-block"));
     }
 
     @Override
