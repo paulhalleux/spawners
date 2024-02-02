@@ -13,7 +13,6 @@ public interface CommandHandlerInterface extends CommandExecutor {
      * @param abstractCommand Executed command.
      * @param context         Command context.
      * @param arguments       Command arguments.
-     * @return Execution state.
      */
-    <ArgTypes extends CommandArguments> boolean handle(AbstractCommand<ArgTypes> abstractCommand, CommandContext context, ArgTypes arguments);
+    <ArgTypes extends CommandArguments> void handle(AbstractCommand<ArgTypes> abstractCommand, CommandContext context, ArgTypes arguments);
 }

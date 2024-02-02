@@ -1,11 +1,12 @@
 package me.kauzas.spawners.plugin.commands.set;
 
-import me.kauzas.spawners.plugin.Main;
+import me.kauzas.spawners.plugin.Locale;
 import me.kauzas.spawners.plugin.events.SpawnerTypeChangeEvent;
 import me.kauzas.spawners.sdk.commands.AbstractCommand;
 import me.kauzas.spawners.sdk.commands.CommandContext;
 import me.kauzas.spawners.sdk.commands.CommandMeta;
 import me.kauzas.spawners.sdk.commands.CompletableCommand;
+import me.kauzas.spawners.sdk.events.DomainEvent;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.TabCompleter;
@@ -22,23 +23,24 @@ public class SetSpawnerCommand extends AbstractCommand<SetSpawnerCommandArgument
     public void execute(CommandContext context, SetSpawnerCommandArguments args) {
         Player player = (Player) context.sender();
         if (args.getEntityType() == null || !args.getEntityType().isSpawnable()) {
-            String entity = args.getEntityType() == null ? args.getRawArg(0) : args.getEntityType().name();
-            player.sendMessage(Main.getLocaleFile().prefixed("error.invalid-entity", Map.of("entity", entity)));
+            String entity = args.getEntityType() == null ? args.getRawArg(0, "") : args.getEntityType().name();
+            player.sendMessage(Locale.prefixed("error.invalid-entity", Map.of("entity", entity)));
             return;
         }
 
         Block targetBlock = player.getTargetBlockExact(5);
         if (targetBlock == null) {
-            player.sendMessage(Main.getLocaleFile().prefixed("error.no-target-block"));
+            player.sendMessage(Locale.prefixed("error.no-target-block"));
             return;
         }
 
         if (targetBlock.getState() instanceof CreatureSpawner spawner) {
             SpawnerTypeChangeEvent event = new SpawnerTypeChangeEvent(player, spawner, args.getEntityType());
-            event.call();
+            DomainEvent.call(event);
+            return;
         }
 
-        player.sendMessage(Main.getLocaleFile().prefixed("error.invalid-block"));
+        player.sendMessage(Locale.prefixed("error.invalid-block"));
     }
 
     @Override

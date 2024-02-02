@@ -86,7 +86,21 @@ public abstract class AbstractCompositeCommand extends AbstractCommand<CommandAr
 
             String[] subCommandArgs = Arrays.copyOfRange(args.getRawArgs(), 1, args.getRawArgs().length);
             CommandArgumentsParser parser = new CommandArgumentsParser(subCommand, subCommandArgs);
-            subCommand.execute(context, parser.parse());
+
+            // We need to add the sub command name to the previous arguments.
+            String[] previousArgs = Arrays.copyOf(context.previousArgs(), context.previousArgs().length + 1);
+            previousArgs[previousArgs.length - 1] = subCommandName;
+
+            CommandContext newContext = new CommandContext(
+                    context.trigger(),
+                    context.sender(),
+                    previousArgs
+            );
+
+            if (subCommand.canExecute(newContext, parser.parse())) {
+                subCommand.execute(newContext, parser.parse());
+            }
+
             return;
         }
 

@@ -20,15 +20,23 @@ public class PluginFile {
      * Gson instance.
      */
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
     /**
      * File instance.
      */
     private final File file;
+
+    /**
+     * Path of the resource in the jar.
+     */
+    private final String resourcePath;
+
     /**
      * Map of the file content.
      * It is used to store the file content in memory.
      */
-    private final Map<String, Object> map;
+    private final Map<String, Object> map = new HashMap<>();
+
     /**
      * If the file has been saved.
      */
@@ -44,19 +52,15 @@ public class PluginFile {
     public PluginFile(PluginBase plugin, String name, String path) {
         String subPath = path == null || path.isEmpty() ? "" : (path.startsWith("/") ? path : ("/" + path));
         this.file = new File(plugin.getDataFolder().getAbsolutePath() + subPath, name);
+        this.resourcePath = subPath + "/" + name;
 
         // Create file if it doesn't exist
         if (!this.file.exists()) {
-            String resourcePath = subPath + "/" + name;
-            createDefaultFile(resourcePath);
+            createDefaultFile();
         }
 
         // Load file content in memory
-        try {
-            this.map = gson.fromJson(new FileReader(file), HashMap.class);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        reload();
     }
 
     /**
@@ -168,11 +172,9 @@ public class PluginFile {
 
     /**
      * Creates a default file.
-     *
-     * @param resourcePath Path of the resource
      */
-    private void createDefaultFile(String resourcePath) {
-        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+    private void createDefaultFile() {
+        try (InputStream inputStream = getClass().getResourceAsStream(this.resourcePath)) {
             // Create file if it doesn't exist
             Files.createDirectories(this.file.getParentFile().toPath());
             Files.createFile(this.file.toPath());
@@ -181,6 +183,28 @@ public class PluginFile {
             String fileContent = inputStream != null ? new String(inputStream.readAllBytes()) : "{}";
             Files.write(this.file.toPath(), fileContent.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Restores the default file.
+     */
+    public void restoreDefaultFile() {
+        //noinspection ResultOfMethodCallIgnored
+        file.delete();
+        createDefaultFile();
+        reload();
+    }
+
+    /**
+     * Reloads the file content.
+     */
+    public void reload() {
+        try {
+            this.map.clear();
+            this.map.putAll(gson.fromJson(new FileReader(file), HashMap.class));
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

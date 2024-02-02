@@ -5,5 +5,5 @@ import org.bukkit.command.CommandSender;
 /**
  * Represents the context of a command execution.
  */
-public record CommandContext(String trigger, CommandSender sender) {
+public record CommandContext(String trigger, CommandSender sender, String[] previousArgs) {
 }

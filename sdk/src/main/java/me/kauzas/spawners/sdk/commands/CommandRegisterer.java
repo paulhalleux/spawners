@@ -54,7 +54,6 @@ public class CommandRegisterer extends ReflectionRegisterer<AbstractCommand> {
         // If the command implements CommandExecutor, set it as executor
         command.setExecutor(handler);
         command.setDescription(meta.description());
-        command.setUsage(meta.usage());
         command.setAliases(List.of(meta.aliases()));
 
         // If the command implements CompletableCommand, set it as tab completer
@@ -75,7 +74,7 @@ public class CommandRegisterer extends ReflectionRegisterer<AbstractCommand> {
     public List<AbstractCommand> getRegisteredItems() {
         return commands;
     }
-    
+
     @Override
     public boolean skip(Class<? extends AbstractCommand> object) {
         CommandMeta meta = object.getAnnotation(CommandMeta.class);

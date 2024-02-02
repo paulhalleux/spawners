@@ -66,3 +66,4 @@ public class Main extends PluginBase {
         getLogger().info("Plugin disabled.");
     }
 }
+

@@ -34,13 +34,6 @@ public @interface CommandMeta {
     String description() default "";
 
     /**
-     * Usage of the command.
-     *
-     * @return Usage of the command.
-     */
-    String usage() default "";
-
-    /**
      * Permission of the command.
      *
      * @return Permission of the command.

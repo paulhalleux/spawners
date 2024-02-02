@@ -35,6 +35,7 @@ public class CommandArgumentsParser {
         if (type == CommandArguments.None.class) return (R) new CommandArguments.None(args);
 
         Map<Field, Object> fieldValueMap = getArgumentFieldsAndValues(type);
+
         return (R) createInstance(type, fieldValueMap);
     }
 
