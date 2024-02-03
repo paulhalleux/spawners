@@ -1,0 +1,9 @@
+{
+  "locale": "en-US",
+  "storage": {
+    "type": "sqlite",
+    "config": {
+      "path": "data.sqlite"
+    }
+  }
+}

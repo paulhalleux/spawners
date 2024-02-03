@@ -1,0 +1,16 @@
+{
+  "prefix": "&6[Spawners]&r ",
+  "error": {
+    "invalid-block": "&cYou must be looking at a spawner to use this command",
+    "no-target-block": "&cNo target block found",
+    "invalid-entity": "&cInvalid entity type &7{{entity}}",
+    "file-not-found": "&cFile not found"
+  },
+  "config": {
+    "file-header": "&eDumping file &7{{filename}}",
+    "dump-format": "&7[{{key}}]&8: &f{{value}}",
+    "reloaded": "&eConfig reloaded successfully",
+    "restored": "&eConfig restored to default"
+  },
+  "spawner-type-changed": "&eSpawner type changed to &7{{entity}}"
+}
