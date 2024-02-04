@@ -10,6 +10,7 @@ import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.hibernate.Session;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -19,7 +20,7 @@ import java.util.Map;
 @CommandMeta(name = "set", description = "Set a spawner type.", subCommand = true, playerOnly = true)
 public class SetSpawnerCommand extends AbstractCommand<SetSpawnerCommand.Arguments> implements CompletableCommand {
     @Override
-    public void execute(CommandContext context, SetSpawnerCommand.Arguments args) {
+    public void execute(CommandContext context, SetSpawnerCommand.Arguments args, @Nullable Session session) {
         Player player = (Player) context.sender();
         if (args.getEntityType() == null || !args.getEntityType().isSpawnable()) {
             String entity = args.getEntityType() == null ? args.getRawArg(0, "") : args.getEntityType().name();

@@ -7,11 +7,14 @@ import me.kauzas.spawners.sdk.commands.CommandArguments;
 import me.kauzas.spawners.sdk.commands.CommandContext;
 import me.kauzas.spawners.sdk.commands.CommandMeta;
 import me.kauzas.spawners.sdk.configuration.PluginFile;
+import org.hibernate.Session;
+
+import javax.annotation.Nullable;
 
 @CommandMeta(name = "reload", description = "Reload the configuration files.", subCommand = true)
 public class ConfigReloadCommand extends AbstractCommand<CommandArguments.None> {
     @Override
-    public void execute(CommandContext context, CommandArguments.None args) {
+    public void execute(CommandContext context, CommandArguments.None args, @Nullable Session session) {
         Main.getInstance().getFiles().forEach(PluginFile::reload);
         context.sender().sendMessage(Locale.prefixed("config.reloaded"));
     }

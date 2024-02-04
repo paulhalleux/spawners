@@ -5,13 +5,15 @@ import me.kauzas.spawners.plugin.Main;
 import me.kauzas.spawners.sdk.commands.*;
 import me.kauzas.spawners.sdk.configuration.PluginFile;
 import org.bukkit.command.TabCompleter;
+import org.hibernate.Session;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 @CommandMeta(name = "dump", description = "Dump the configuration content in the chat.", subCommand = true)
 public class ConfigDumpCommand extends AbstractCommand<ConfigDumpCommand.Arguments> implements CompletableCommand {
     @Override
-    public void execute(CommandContext context, ConfigDumpCommand.Arguments args) {
+    public void execute(CommandContext context, ConfigDumpCommand.Arguments args, @Nullable Session session) {
         PluginFile file = Main.getInstance().getFile(args.getFileName());
         if (file == null) {
             context.sender().sendMessage(Locale.prefixed("error.file-not-found"));

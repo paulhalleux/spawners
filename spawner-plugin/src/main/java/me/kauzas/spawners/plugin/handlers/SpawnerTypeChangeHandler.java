@@ -4,7 +4,9 @@ import me.kauzas.spawners.plugin.Locale;
 import me.kauzas.spawners.plugin.events.SpawnerTypeChangeEvent;
 import me.kauzas.spawners.sdk.events.DomainEventHandler;
 import org.bukkit.block.CreatureSpawner;
+import org.hibernate.Session;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Map;
  */
 public class SpawnerTypeChangeHandler extends DomainEventHandler<SpawnerTypeChangeEvent> {
     @Override
-    public void handle(SpawnerTypeChangeEvent event) {
+    public void handle(SpawnerTypeChangeEvent event, @Nullable Session session) {
         CreatureSpawner spawner = event.getSpawnerState();
         spawner.setSpawnedType(event.getEntityType());
         spawner.update();

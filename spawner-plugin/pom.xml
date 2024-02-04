@@ -18,6 +18,8 @@
         <maven.compiler.target>16</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiledjar.name>spawners-${project.version}</compiledjar.name>
+        <!-- dependencies versions -->
+        <spigot.version>1.16.5-R0.1-SNAPSHOT</spigot.version>
     </properties>
 
     <repositories>
@@ -86,13 +88,8 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>${spigot.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.4.3.Final</version>
         </dependency>
     </dependencies>
 </project>

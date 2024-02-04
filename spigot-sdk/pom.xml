@@ -17,6 +17,9 @@
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- dependencies versions -->
+        <hibernate.version>6.4.3.Final</hibernate.version>
+        <spigot.version>1.16.5-R0.1-SNAPSHOT</spigot.version>
     </properties>
 
     <repositories>
@@ -30,7 +33,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>${spigot.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -42,6 +45,16 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.10.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-community-dialects</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
     </dependencies>
 </project>

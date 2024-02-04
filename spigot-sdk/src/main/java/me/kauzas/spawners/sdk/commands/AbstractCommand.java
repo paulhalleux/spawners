@@ -2,7 +2,9 @@ package me.kauzas.spawners.sdk.commands;
 
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.hibernate.Session;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public abstract class AbstractCommand<ArgTypes extends CommandArguments> {
      *
      * @param context Command context.
      */
-    public abstract void execute(CommandContext context, ArgTypes args);
+    public abstract void execute(CommandContext context, ArgTypes args, @Nullable Session session);
 
     /**
      * Method called when a required argument is missing.
@@ -47,7 +49,7 @@ public abstract class AbstractCommand<ArgTypes extends CommandArguments> {
         String previousArgs = context.previousArgs().length > 0 ? " " + String.join(" ", context.previousArgs()) : "";
 
         lines.add("§8§m----------------------[§r§7§l HELP §8§m]----------------------");
-        
+
         if (this instanceof AbstractCompositeCommand compositeCommand) {
             for (AbstractCommand<?> command : compositeCommand.getSubCommands()) {
                 CommandMeta subMeta = command.getMeta();

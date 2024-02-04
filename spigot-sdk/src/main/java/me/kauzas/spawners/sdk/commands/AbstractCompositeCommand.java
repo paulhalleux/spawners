@@ -2,6 +2,7 @@ package me.kauzas.spawners.sdk.commands;
 
 import me.kauzas.spawners.sdk.registry.SkipRegistration;
 import org.bukkit.command.TabCompleter;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +73,7 @@ public abstract class AbstractCompositeCommand extends AbstractCommand<CommandAr
      * @param args    Command arguments.
      */
     @Override
-    public void execute(CommandContext context, CommandArguments.None args) {
+    public void execute(CommandContext context, CommandArguments.None args, Session session) {
         if (args == null || args.getRawArgs().length == 0) {
             main(context);
             return;
@@ -98,7 +99,7 @@ public abstract class AbstractCompositeCommand extends AbstractCommand<CommandAr
             );
 
             if (subCommand.canExecute(newContext, parser.parse())) {
-                subCommand.execute(newContext, parser.parse());
+                subCommand.execute(newContext, parser.parse(), session);
             }
 
             return;

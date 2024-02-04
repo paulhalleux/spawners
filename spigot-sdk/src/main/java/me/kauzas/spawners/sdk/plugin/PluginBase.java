@@ -15,16 +15,31 @@ import java.util.function.Consumer;
  * Base class for plugins.
  */
 public abstract class PluginBase extends JavaPlugin {
-    private final List<RegistryInterface<?>> registerers;
+    private final List<RegistryInterface<?>> registries;
     private final Map<String, PluginFile> files;
 
     /**
      * Constructor of {@link PluginBase}.
      */
     protected PluginBase() {
-        this.registerers = new ArrayList<>();
+        this.registries = new ArrayList<>();
         this.files = new HashMap<>();
     }
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        onPluginEnable();
+
+        if (this instanceof StorageProvider provider) {
+            provider.initStorage();
+        }
+    }
+
+    /**
+     * Method called when the plugin is enabled.
+     */
+    public abstract void onPluginEnable();
 
     /**
      * Gets a registerer by its class.
@@ -33,7 +48,7 @@ public abstract class PluginBase extends JavaPlugin {
      * @return Registerer instance or null.
      */
     public ReflectionRegistry<?> getRegisterer(Class<? extends RegistryInterface<?>> registererClass) {
-        for (RegistryInterface<?> registerer : registerers) {
+        for (RegistryInterface<?> registerer : registries) {
             if (registerer.getClass().equals(registererClass)) {
                 return (ReflectionRegistry<?>) registerer;
             }
@@ -48,7 +63,7 @@ public abstract class PluginBase extends JavaPlugin {
      * @param registerer Registerer to register.
      */
     public void registry(RegistryInterface<?> registerer, Consumer<RegistryInterface<?>> consumer) {
-        registerers.add(registerer);
+        registries.add(registerer);
         consumer.accept(registerer);
     }
 
@@ -66,8 +81,8 @@ public abstract class PluginBase extends JavaPlugin {
      *
      * @return List of registered items.
      */
-    public List<RegistryInterface<?>> getRegisterers() {
-        return registerers;
+    public List<RegistryInterface<?>> getRegistries() {
+        return registries;
     }
 
     /**

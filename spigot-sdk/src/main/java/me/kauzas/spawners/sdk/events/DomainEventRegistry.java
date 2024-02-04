@@ -43,7 +43,7 @@ public class DomainEventRegistry extends ReflectionRegistry<DomainEventHandler> 
         }
 
         Bukkit.getServer().getPluginManager().registerEvent((Class<? extends Event>) type, object, getPriority(object), (listener, event) -> {
-            object.handler((DomainEvent) event);
+            object.handler((DomainEvent) event, getPlugin());
         }, getPlugin(), false);
 
         return RegisterResult.SUCCESS;
